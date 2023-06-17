@@ -19,12 +19,12 @@ namespace BusinessObject
             IConfigurationRoot configuration = builder.Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("BookStoreDb"));
         }
-        public DbSet<Author> Author { get; set; }
-        public DbSet<Book> Book { get; set; }
-        public DbSet<BookAuthor> BookAuthor { get; set; }
-        public DbSet<Publisher> Publisher { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookAuthor> BookAuthors { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
