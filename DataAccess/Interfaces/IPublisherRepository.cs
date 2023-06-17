@@ -17,4 +17,4 @@ namespace DataAccess.Interfaces
         void DeletePublisher(Publisher publisher);
     }
 }
-}
+

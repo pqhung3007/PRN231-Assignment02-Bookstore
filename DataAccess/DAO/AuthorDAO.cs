@@ -7,29 +7,53 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DAO
 {
-    internal class AuthorDAO
+    public class AuthorDAO
     {
-        internal static void DeleteAuthor(Author author)
+        public static void DeleteAuthor(Author author)
         {
             throw new NotImplementedException();
         }
 
-        internal static List<Author> GetAllAuthors()
+        public static List<Author> GetAllAuthors()
+        {
+            var listAuthors = new List<Author>();
+            try
+            {
+                using (var context = new BookStoreDbContext())
+                {
+                    listAuthors=context.Authors.ToList();
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return listAuthors;
+        }
+
+        public static Author GetAuthorById(int id)
         {
             throw new NotImplementedException();
         }
 
-        internal static Author GetAuthorById(int id)
+        public static void InsertAuthor(Author author)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var context = new BookStoreDbContext())
+                {
+                    context.Authors.Add(author);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
-        internal static void InsertAuthor(Author author)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void UpdateAuthor(Author author)
+        public static void UpdateAuthor(Author author)
         {
             throw new NotImplementedException();
         }
