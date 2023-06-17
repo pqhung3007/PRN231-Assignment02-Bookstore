@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    internal class BookRepository : IBookRepository
+    public class BookRepository : IBookRepository
     {
         public void DeleteBook(Book book) => BookDAO.DeleteBook(book);
 

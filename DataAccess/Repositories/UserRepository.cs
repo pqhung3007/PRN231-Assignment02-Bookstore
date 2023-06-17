@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         public void DeleteUser(User user) => UserDAO.DeleteUser(user);
 

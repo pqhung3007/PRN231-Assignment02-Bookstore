@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    internal class PublisherRepository : IPublisherRepository
+    public class PublisherRepository : IPublisherRepository
     {
         public void DeletePublisher(Publisher publisher) => PublisherDAO.DeletePublisher(publisher);
 

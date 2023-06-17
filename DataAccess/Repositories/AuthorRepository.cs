@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    internal class AuthorRepository : IAuthorRepository
+    public class AuthorRepository : IAuthorRepository
     {
         public void DeleteAuthor(Author author) => AuthorDAO.DeleteAuthor(author);
 
