@@ -9,6 +9,7 @@ namespace DataAccess.DAO
 {
     public interface IAuthorDAO
     {
+        List<AuthorDto> GetAllAuthors();
         void InsertAuthor(AuthorDto authorDto);
     }
 }

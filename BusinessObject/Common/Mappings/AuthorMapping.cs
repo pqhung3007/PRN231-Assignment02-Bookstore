@@ -13,6 +13,7 @@ namespace BusinessObject.Common.Mappings
         public AuthorMapping()
         {
             CreateMap<AuthorDto, Author>();
+            CreateMap<Author, AuthorDto>();
         }
     }
 }

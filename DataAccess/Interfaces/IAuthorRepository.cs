@@ -10,10 +10,8 @@ namespace DataAccess.Interfaces
 {
     public interface IAuthorRepository
     {
-       /* Author GetAuthorById(int id);
-        List<Author> GetAllAuthors();
-        void UpdateAuthor(Author author);
-        void DeleteAuthor(Author author);*/
+        List<AuthorDto> GetAllAuthors();
         void InsertAuthor(AuthorDto author);
+        void UpdateAuthor(AuthorDto author, int authorId);
     }
 }

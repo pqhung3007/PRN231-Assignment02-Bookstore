@@ -24,9 +24,9 @@ namespace eBookStoreWebAPI.Controllers
 
         // GET: api/<AuthorsController>
         [HttpGet]
-        public ActionResult<IEnumerable<Author>> Get()
+        public ActionResult<IEnumerable<AuthorDto>> Get()
         {
-            return Ok();
+            return Ok(_repository.GetAllAuthors());
         }
 
         // GET api/<AuthorsController>/5
@@ -49,6 +49,7 @@ namespace eBookStoreWebAPI.Controllers
         [HttpPut("{id}")]
         public void Put([FromODataUri]int authorId, [FromBody] AuthorDto author)
         {
+            _repository.UpdateAuthor(author, authorId);
         }
 
         // DELETE api/<AuthorsController>/5

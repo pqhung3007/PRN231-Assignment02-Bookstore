@@ -19,47 +19,12 @@ namespace DataAccess.DAO
             _mapper = mapper;
             _context = context;
         }
-       
-      /*  public static void DeleteAuthor(Author author)
-        {
-            throw new NotImplementedException();
-        }
 
-        public static List<Author> GetAllAuthors()
+        public List<AuthorDto> GetAllAuthors()
         {
-            var listAuthors = new List<Author>();
-            try
-            {
-                using (var context = new BookStoreDbContext())
-                {
-                    listAuthors = context.Authors.ToList();
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-            return listAuthors;
+            var listAuthors = _context.Authors.ToList();
+            return _mapper.Map<List<AuthorDto>>(listAuthors);
         }
-
-        public static Author GetAuthorById(int id)
-        {
-            Author author = null;
-            try
-            {
-                using (var context = new BookStoreDbContext())
-                {
-                    author = context.Authors.Where(a => a.AuthorId == id).FirstOrDefault();
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-            return author;
-        }*/
 
         public void InsertAuthor(AuthorDto authorDto)
         {

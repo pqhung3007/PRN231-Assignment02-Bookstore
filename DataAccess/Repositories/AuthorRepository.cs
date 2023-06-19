@@ -17,7 +17,9 @@ namespace DataAccess.Repositories
         {
             _authorDao = authorDao;
         }
-        
+
+        public List<AuthorDto> GetAllAuthors() => _authorDao.GetAllAuthors();
+
         /*public void DeleteAuthor(Author author) => AuthorDAO.DeleteAuthor(author);
 
         public List<Author> GetAllAuthors() => AuthorDAO.GetAllAuthors();
