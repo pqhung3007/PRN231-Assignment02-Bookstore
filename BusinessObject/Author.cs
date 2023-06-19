@@ -22,6 +22,6 @@ namespace BusinessObject
         public string? Zip { get; set; }
         public string? EmailAddress { get; set; }
 
-        public virtual ICollection<BookAuthor> BookAuthors { get; set; }
+        public virtual ICollection<BookAuthor>? BookAuthors { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using BusinessObject;
+﻿using AutoMapper;
+using BusinessObject;
+using BusinessObject.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DAO
 {
-    public class AuthorDAO
+    public class AuthorDAO : IAuthorDAO
     {
-        public static void DeleteAuthor(Author author)
+        private readonly IMapper _mapper;
+        private readonly BookStoreDbContext _context;
+
+        public AuthorDAO(IMapper mapper, BookStoreDbContext context)
+        {
+            _mapper = mapper;
+            _context = context;
+        }
+       
+      /*  public static void DeleteAuthor(Author author)
         {
             throw new NotImplementedException();
         }
@@ -21,7 +32,7 @@ namespace DataAccess.DAO
             {
                 using (var context = new BookStoreDbContext())
                 {
-                    listAuthors=context.Authors.ToList();
+                    listAuthors = context.Authors.ToList();
                     context.SaveChanges();
                 }
             }
@@ -34,16 +45,12 @@ namespace DataAccess.DAO
 
         public static Author GetAuthorById(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public static void InsertAuthor(Author author)
-        {
+            Author author = null;
             try
             {
                 using (var context = new BookStoreDbContext())
                 {
-                    context.Authors.Add(author);
+                    author = context.Authors.Where(a => a.AuthorId == id).FirstOrDefault();
                     context.SaveChanges();
                 }
             }
@@ -51,11 +58,29 @@ namespace DataAccess.DAO
             {
                 throw new Exception(e.Message);
             }
+            return author;
+        }*/
+
+        public void InsertAuthor(AuthorDto authorDto)
+        {
+            try
+            {
+                    var mappedAuthor = _mapper.Map<Author>(authorDto);
+                    _context.Authors.Add(mappedAuthor);
+                    _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
-        public static void UpdateAuthor(Author author)
+        public void UpdateAuthor(AuthorDto authorDto, int authorId)
         {
-            throw new NotImplementedException();
+            var author = _context.Authors.Where(a => a.AuthorId == authorId).FirstOrDefault();
+            var mappedAuthor = _mapper.Map(authorDto, author);
+            _context.SaveChanges();
         }
+
     }
 }

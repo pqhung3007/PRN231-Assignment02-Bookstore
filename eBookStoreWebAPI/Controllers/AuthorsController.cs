@@ -1,8 +1,11 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO;
 using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Formatter;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,35 +13,41 @@ namespace eBookStoreWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase
+    public class AuthorsController : ODataController
     {
-        private IAuthorRepository _repository = new AuthorRepository();
+        private readonly IAuthorRepository _repository;
+
+        public AuthorsController(IAuthorRepository repository)
+        {
+            _repository = repository;
+        }
+
         // GET: api/<AuthorsController>
         [HttpGet]
         public ActionResult<IEnumerable<Author>> Get()
         {
-            return _repository.GetAllAuthors();
+            return Ok();
         }
 
         // GET api/<AuthorsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult Get(int id)
         {
-            return "value";
+            return Ok();
         }
 
         // POST api/<AuthorsController>
         [HttpPost]
-        public IActionResult Post(Author author)
+        public IActionResult Post([FromBody]AuthorDto author)
         {
             _repository.InsertAuthor(author);
-            return NoContent();
+            return Ok();
         }
        
 
         // PUT api/<AuthorsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put([FromODataUri]int authorId, [FromBody] AuthorDto author)
         {
         }
 

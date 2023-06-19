@@ -10,7 +10,7 @@ namespace BusinessObject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Author",
+                name: "Authors",
                 columns: table => new
                 {
                     AuthorId = table.Column<int>(type: "int", nullable: false)
@@ -26,11 +26,11 @@ namespace BusinessObject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Author", x => x.AuthorId);
+                    table.PrimaryKey("PK_Authors", x => x.AuthorId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Publisher",
+                name: "Publishers",
                 columns: table => new
                 {
                     PubId = table.Column<int>(type: "int", nullable: false)
@@ -42,11 +42,11 @@ namespace BusinessObject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Publisher", x => x.PubId);
+                    table.PrimaryKey("PK_Publishers", x => x.PubId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
+                name: "Roles",
                 columns: table => new
                 {
                     RoleId = table.Column<int>(type: "int", nullable: false)
@@ -55,11 +55,11 @@ namespace BusinessObject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.RoleId);
+                    table.PrimaryKey("PK_Roles", x => x.RoleId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Book",
+                name: "Books",
                 columns: table => new
                 {
                     BookId = table.Column<int>(type: "int", nullable: false)
@@ -77,16 +77,16 @@ namespace BusinessObject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Book", x => x.BookId);
+                    table.PrimaryKey("PK_Books", x => x.BookId);
                     table.ForeignKey(
-                        name: "FK_Book_Publisher_PublisherPubId",
+                        name: "FK_Books_Publishers_PublisherPubId",
                         column: x => x.PublisherPubId,
-                        principalTable: "Publisher",
+                        principalTable: "Publishers",
                         principalColumn: "PubId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -104,92 +104,85 @@ namespace BusinessObject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_User_Publisher_PublisherPubId",
+                        name: "FK_Users_Publishers_PublisherPubId",
                         column: x => x.PublisherPubId,
-                        principalTable: "Publisher",
+                        principalTable: "Publishers",
                         principalColumn: "PubId");
                     table.ForeignKey(
-                        name: "FK_User_Role_RoleId",
+                        name: "FK_Users_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Role",
+                        principalTable: "Roles",
                         principalColumn: "RoleId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookAuthor",
+                name: "BookAuthors",
                 columns: table => new
                 {
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
                     BookId = table.Column<int>(type: "int", nullable: false),
                     AuthorOrder = table.Column<int>(type: "int", nullable: true),
-                    RoyaltyPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    AuthorId1 = table.Column<int>(type: "int", nullable: false)
+                    RoyaltyPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookAuthor", x => x.AuthorId);
+                    table.PrimaryKey("PK_BookAuthors", x => new { x.AuthorId, x.BookId });
                     table.ForeignKey(
-                        name: "FK_BookAuthor_Author_AuthorId1",
-                        column: x => x.AuthorId1,
-                        principalTable: "Author",
+                        name: "FK_BookAuthors_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
                         principalColumn: "AuthorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BookAuthor_Book_BookId",
+                        name: "FK_BookAuthors_Books_BookId",
                         column: x => x.BookId,
-                        principalTable: "Book",
+                        principalTable: "Books",
                         principalColumn: "BookId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Book_PublisherPubId",
-                table: "Book",
-                column: "PublisherPubId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BookAuthor_AuthorId1",
-                table: "BookAuthor",
-                column: "AuthorId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BookAuthor_BookId",
-                table: "BookAuthor",
+                name: "IX_BookAuthors_BookId",
+                table: "BookAuthors",
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_PublisherPubId",
-                table: "User",
+                name: "IX_Books_PublisherPubId",
+                table: "Books",
                 column: "PublisherPubId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_RoleId",
-                table: "User",
+                name: "IX_Users_PublisherPubId",
+                table: "Users",
+                column: "PublisherPubId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
                 column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BookAuthor");
+                name: "BookAuthors");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Author");
+                name: "Authors");
 
             migrationBuilder.DropTable(
-                name: "Book");
+                name: "Books");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "Roles");
 
             migrationBuilder.DropTable(
-                name: "Publisher");
+                name: "Publishers");
         }
     }
 }

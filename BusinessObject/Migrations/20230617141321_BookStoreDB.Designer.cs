@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(BookStoreDbContext))]
-    [Migration("20230616072717_BookStoreDB")]
+    [Migration("20230617141321_BookStoreDB")]
     partial class BookStoreDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,7 +58,7 @@ namespace BusinessObject.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("BusinessObject.Book", b =>
@@ -103,36 +103,28 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("PublisherPubId");
 
-                    b.ToTable("Book");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("BusinessObject.BookAuthor", b =>
                 {
                     b.Property<int>("AuthorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"), 1L, 1);
-
-                    b.Property<int>("AuthorId1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AuthorOrder")
                         .HasColumnType("int");
 
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AuthorOrder")
+                        .HasColumnType("int");
+
                     b.Property<decimal?>("RoyaltyPercentage")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("AuthorId");
-
-                    b.HasIndex("AuthorId1");
+                    b.HasKey("AuthorId", "BookId");
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookAuthor");
+                    b.ToTable("BookAuthors");
                 });
 
             modelBuilder.Entity("BusinessObject.Publisher", b =>
@@ -157,7 +149,7 @@ namespace BusinessObject.Migrations
 
                     b.HasKey("PubId");
 
-                    b.ToTable("Publisher");
+                    b.ToTable("Publishers");
                 });
 
             modelBuilder.Entity("BusinessObject.Role", b =>
@@ -173,7 +165,7 @@ namespace BusinessObject.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("BusinessObject.User", b =>
@@ -220,7 +212,7 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BusinessObject.Book", b =>
@@ -236,7 +228,7 @@ namespace BusinessObject.Migrations
                 {
                     b.HasOne("BusinessObject.Author", "Author")
                         .WithMany("BookAuthors")
-                        .HasForeignKey("AuthorId1")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
