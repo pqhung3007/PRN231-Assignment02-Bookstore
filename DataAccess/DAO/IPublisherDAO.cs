@@ -1,14 +1,13 @@
-﻿using BusinessObject;
-using BusinessObject.DTO;
+﻿using BusinessObject.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Interfaces
+namespace DataAccess.DAO
 {
-    public interface IPublisherRepository
+    public interface IPublisherDAO
     {
         void DeletePublisher(int id);
         List<PublisherDto> GetAllPublishers();
@@ -16,4 +15,3 @@ namespace DataAccess.Interfaces
         void UpdatePublisher(int id, PublisherDto publisherDto);
     }
 }
-

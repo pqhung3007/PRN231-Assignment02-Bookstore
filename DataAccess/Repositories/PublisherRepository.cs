@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO;
 using DataAccess.DAO;
 using DataAccess.Interfaces;
 using System;
@@ -11,14 +12,20 @@ namespace DataAccess.Repositories
 {
     public class PublisherRepository : IPublisherRepository
     {
-        public void DeletePublisher(Publisher publisher) => PublisherDAO.DeletePublisher(publisher);
+        private readonly IPublisherDAO _publisherDao;
 
-        public List<Publisher> GetAllPublishers() => PublisherDAO.GetAllPublishers();
+        public PublisherRepository(IPublisherDAO publisherDao)
+        {
+            _publisherDao = publisherDao;
+        }
 
-        public Publisher GetPublisherById(int publisherId) => PublisherDAO.GetPublisherById(publisherId);
+        public void DeletePublisher(int id) => _publisherDao.DeletePublisher(id);
 
-        public void InsertPublisher(Publisher publisher) => PublisherDAO.InsertPublisher(publisher);
+        public List<PublisherDto> GetAllPublishers() => _publisherDao.GetAllPublishers();
 
-        public void UpdatePublisher(Publisher publisher) => PublisherDAO.UpdatePublisher(publisher);
+        public void InsertPublisher(PublisherDto publisherDto) => _publisherDao.InsertPublisher(publisherDto);
+
+        public void UpdatePublisher(int id, PublisherDto publisherDto) => _publisherDao.UpdatePublisher(id, publisherDto);
+       
     }
 }

@@ -20,6 +20,13 @@ namespace DataAccess.DAO
             _context = context;
         }
 
+        public void DeleteAuthor(int authorId)
+        {
+            var author = _context.Authors.FirstOrDefault(a => a.AuthorId == authorId);
+            _context.Authors.Remove(author);
+            _context.SaveChanges();
+        }
+
         public List<AuthorDto> GetAllAuthors()
         {
             var listAuthors = _context.Authors.ToList();
@@ -42,8 +49,9 @@ namespace DataAccess.DAO
 
         public void UpdateAuthor(AuthorDto authorDto, int authorId)
         {
-            var author = _context.Authors.Where(a => a.AuthorId == authorId).FirstOrDefault();
+            var author = _context.Authors.FirstOrDefault(x => x.AuthorId == authorId);
             var mappedAuthor = _mapper.Map(authorDto, author);
+            _context.Authors.Update(mappedAuthor);
             _context.SaveChanges();
         }
 

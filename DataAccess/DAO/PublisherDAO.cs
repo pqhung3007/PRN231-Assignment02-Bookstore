@@ -1,4 +1,6 @@
-﻿using BusinessObject;
+﻿using AutoMapper;
+using BusinessObject;
+using BusinessObject.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +9,50 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DAO
 {
-    internal class PublisherDAO
+    public class PublisherDAO : IPublisherDAO
     {
-        internal static void DeletePublisher(Publisher publisher)
+        private readonly IMapper _mapper;
+        private readonly BookStoreDbContext _context;
+
+        public PublisherDAO(IMapper mapper, BookStoreDbContext context)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _context = context;
         }
 
-        internal static List<Publisher> GetAllPublishers()
+        public void DeletePublisher(int id)
         {
-            throw new NotImplementedException();
+            var publisher = _context.Publishers.FirstOrDefault(a => a.PubId == id);
+            _context.Publishers.Remove(publisher);
+            _context.SaveChanges();
         }
 
-        internal static Publisher GetPublisherById(int publisherId)
+        public List<PublisherDto> GetAllPublishers()
         {
-            throw new NotImplementedException();
+            var listPublishers = _context.Publishers.ToList();
+            return _mapper.Map<List<PublisherDto>>(listPublishers);
         }
 
-        internal static void InsertPublisher(Publisher publisher)
+        public void InsertPublisher(PublisherDto publisherDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var mappedPublisher = _mapper.Map<Publisher>(publisherDto);
+                _context.Publishers.Add(mappedPublisher);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
-        internal static void UpdatePublisher(Publisher publisher)
+        public void UpdatePublisher(int id, PublisherDto publisherDto)
         {
-            throw new NotImplementedException();
+            var publisher= _context.Publishers.FirstOrDefault(x => x.PubId == id);
+            var mappedPublisher = _mapper.Map(publisherDto, publisher);
+            _context.Publishers.Update(mappedPublisher);
+            _context.SaveChanges();
         }
     }
 }

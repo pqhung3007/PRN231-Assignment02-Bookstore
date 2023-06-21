@@ -47,15 +47,18 @@ namespace eBookStoreWebAPI.Controllers
 
         // PUT api/<AuthorsController>/5
         [HttpPut("{id}")]
-        public void Put([FromODataUri]int authorId, [FromBody] AuthorDto author)
+        public IActionResult Put([FromODataUri]int authorId, [FromBody] AuthorDto author)
         {
             _repository.UpdateAuthor(author, authorId);
+            return Ok();
         }
 
         // DELETE api/<AuthorsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete([FromRoute]int authorId)
         {
+            _repository.DeleteAuthor(authorId);
+            return Ok();
         }
     }
 }
