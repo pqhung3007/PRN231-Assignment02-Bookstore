@@ -4,6 +4,8 @@ namespace eBookStore.Models
 {
 	public class Author
 	{
+		[JsonPropertyName("authorId")]
+		public int AuthorId { get; set; }
 		[JsonPropertyName("lastName")]
 		public string? LastName { get; set; }
 		[JsonPropertyName("firstName")]
