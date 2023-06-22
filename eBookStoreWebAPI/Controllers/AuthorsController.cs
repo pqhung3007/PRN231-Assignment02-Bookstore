@@ -31,9 +31,9 @@ namespace eBookStoreWebAPI.Controllers
 
         // GET api/<AuthorsController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int authorId)
+        public IActionResult Get(int id)
         {
-            return Ok(_repository.GetAuthorById(authorId));
+            return Ok(_repository.GetAuthorById(id));
         }
 
         // POST api/<AuthorsController>
@@ -47,9 +47,9 @@ namespace eBookStoreWebAPI.Controllers
 
         // PUT api/<AuthorsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromODataUri]int authorId, [FromBody] AuthorDto author)
+        public IActionResult Put(int id, [FromBody] AuthorDto author)
         {
-            _repository.UpdateAuthor(author, authorId);
+            _repository.UpdateAuthor(author, id);
             return Ok();
         }
 

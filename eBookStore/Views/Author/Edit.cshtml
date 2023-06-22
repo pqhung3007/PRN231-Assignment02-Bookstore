@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Author
+
+
+<form asp-action="Edit" asp-controller="Author" method="post">
+    <input type="hidden" asp-for="AuthorId" value="@ViewBag.Author.AuthorId" />
+    <label>First Name:</label>
+    <input required asp-for="FirstName"
+    type="text" placeholder="First Name" value="@ViewBag.Author.FirstName" />
+    <br />
+    <label>Last Name:</label>
+    <input required asp-for="LastName"
+    type="text" placeholder="Last Name" value="@ViewBag.Author.LastName" />
+    <br />
+    <label>City:</label>
+     <select required name="city"
+         >
+        <option selected value="Hanoi">Hà Nội</option>
+        <option value="Ho Chi Minh">Hồ Chí Minh</option>
+        <option value="Da Nang">Đà Nẵng</option>
+    </select>
+    <br />
+    <label>Email Address:</label>
+    <input required name="emailAddress" type="email" placeholder="Email" value="@ViewBag.Author.EmailAddress" />
+    <br />
+    <div class="mt-4">
+        <button type="submit" class="btn-info">Save</button>
+        <button type="reset" class="btn-info">Clear</button>
+    </div>
+</form>

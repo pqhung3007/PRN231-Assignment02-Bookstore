@@ -57,12 +57,31 @@ namespace eBookStore.Controllers
 		}
 
 		// GET: AuthorController/Edit/5
-		public ActionResult Edit(int id)
+		public async Task<IActionResult> Edit(int id)
 		{
-			return View();
-		}
+            _connectionString = "https://localhost:7058/api/Authors/" + id.ToString();
+            HttpResponseMessage response = await _client.GetAsync(_connectionString);
+            string strData = await response.Content.ReadAsStringAsync();
+            
+            Author author = JsonSerializer.Deserialize<Author>(strData);
+            ViewBag.Author = author;
 
-		public async Task<IActionResult> Delete(int id)
+            return View();
+		}
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(Author author)
+		{
+            _connectionString = "https://localhost:7058/api/Authors/" + author.AuthorId;
+            string json = JsonSerializer.Serialize(author);
+           
+            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await _client.PutAsync(_connectionString, content);
+            
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
 		{
             _connectionString = "https://localhost:7058/api/Authors/" + id.ToString();
             HttpResponseMessage response = await _client.DeleteAsync(_connectionString);
