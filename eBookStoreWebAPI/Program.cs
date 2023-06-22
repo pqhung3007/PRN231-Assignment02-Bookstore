@@ -20,6 +20,9 @@ builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IPublisherDAO, PublisherDAO>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 
+builder.Services.AddScoped<IBookDAO, BookDAO>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+
 builder.Services.AddDbContext<BookStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookStoreDb")));
 
