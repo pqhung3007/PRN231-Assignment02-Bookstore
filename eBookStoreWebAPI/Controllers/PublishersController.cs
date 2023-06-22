@@ -27,11 +27,11 @@ namespace eBookStoreWebAPI.Controllers
 
         // GET api/<PublishersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<PublisherDto> Get(int publisherId)
         {
-            return "value";
+            return Ok(_repository.GetPublisherById(publisherId));
         }
-
+        
         // POST api/<PublishersController>
         [HttpPost]
         public IActionResult Post([FromBody] PublisherDto publisherDto)
@@ -43,16 +43,18 @@ namespace eBookStoreWebAPI.Controllers
 
         // PUT api/<PublishersController>/5
         [HttpPut("{id}")]
-        public void Put([FromODataUri] int publisherId, [FromBody] PublisherDto publisherDto)
+        public IActionResult Put([FromODataUri] int publisherId, [FromBody] PublisherDto publisherDto)
         {
             _repository.UpdatePublisher(publisherId, publisherDto);
+            return Ok();
         }
 
         // DELETE api/<PublishersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             _repository.DeletePublisher(id);
+            return Ok();
         }
     }
 }

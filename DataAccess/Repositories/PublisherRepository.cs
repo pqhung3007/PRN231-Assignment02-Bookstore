@@ -23,6 +23,7 @@ namespace DataAccess.Repositories
 
         public List<PublisherDto> GetAllPublishers() => _publisherDao.GetAllPublishers();
 
+        public PublisherDto GetPublisherById(int publisherId) => _publisherDao.GetPublisherById(publisherId);
         public void InsertPublisher(PublisherDto publisherDto) => _publisherDao.InsertPublisher(publisherDto);
 
         public void UpdatePublisher(int id, PublisherDto publisherDto) => _publisherDao.UpdatePublisher(id, publisherDto);

@@ -12,6 +12,7 @@ namespace DataAccess.Interfaces
     {
         void DeletePublisher(int id);
         List<PublisherDto> GetAllPublishers();
+        PublisherDto GetPublisherById(int publisherId);
         void InsertPublisher(PublisherDto publisherDto);
         void UpdatePublisher(int id, PublisherDto publisherDto);
     }

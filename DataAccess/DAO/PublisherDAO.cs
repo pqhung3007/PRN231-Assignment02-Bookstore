@@ -33,6 +33,16 @@ namespace DataAccess.DAO
             return _mapper.Map<List<PublisherDto>>(listPublishers);
         }
 
+        public PublisherDto GetPublisherById(int publisherId)
+        {
+            var publisher = _context.Publishers.FirstOrDefault(a => a.PubId == publisherId);
+            if (publisher == null)
+            {
+                throw new Exception("Publisher not found");
+            }
+            return _mapper.Map<PublisherDto>(publisher);
+        }
+
         public void InsertPublisher(PublisherDto publisherDto)
         {
             try
