@@ -55,9 +55,9 @@ namespace eBookStoreWebAPI.Controllers
 
         // DELETE api/<AuthorsController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute]int authorId)
+        public IActionResult Delete(int id)
         {
-            _repository.DeleteAuthor(authorId);
+            _repository.DeleteAuthor(id);
             return Ok();
         }
     }
