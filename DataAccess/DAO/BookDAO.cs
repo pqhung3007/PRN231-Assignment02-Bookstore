@@ -1,4 +1,7 @@
-﻿using BusinessObject;
+﻿using AutoMapper;
+using BusinessObject;
+using BusinessObject.DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,41 +10,21 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DAO
 {
-    internal class BookDAO
+    public class BookDAO : IBookDAO
     {
-        internal static void DeleteBook(Book book)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly IMapper _mapper;
+        private readonly BookStoreDbContext _context;
 
-        internal static List<Book> GetAllBooks()
+        public BookDAO(IMapper mapper, BookStoreDbContext context)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _context = context;
         }
-
-        internal static Book GetBookById(int id)
+        
+        public List<BookDto> GetAllBooks()
         {
-            throw new NotImplementedException();
-        }
-
-        internal static List<Book> GetBooksByAuthorId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static List<Book> GetBooksByPublisherId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void InsertBook(Book book)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void UpdateBook(Book book)
-        {
-            throw new NotImplementedException();
+            var books = _context.Books.Include(b => b.Publisher).ToList();
+            return _mapper.Map<List<BookDto>>(books);
         }
     }
 }

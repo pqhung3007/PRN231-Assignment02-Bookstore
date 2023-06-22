@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO;
 using DataAccess.DAO;
 using DataAccess.Interfaces;
 using System;
@@ -11,17 +12,13 @@ namespace DataAccess.Repositories
 {
     public class BookRepository : IBookRepository
     {
-        public void DeleteBook(Book book) => BookDAO.DeleteBook(book);
+        private readonly IBookDAO _bookDao;
 
-        public List<Book> GetAllBooks() => BookDAO.GetAllBooks();
+        public BookRepository(IBookDAO bookDao)
+        {
+            _bookDao = bookDao;
+        }
 
-        public Book GetBookById(int id) => BookDAO.GetBookById(id);
-
-        public List<Book> GetBooksByAuthorId(int id) => BookDAO.GetBooksByAuthorId(id);
-
-        public List<Book> GetBooksByPublisherId(int id) => BookDAO.GetBooksByPublisherId(id);
-        public void InsertBook(Book book) => BookDAO.InsertBook(book);
-
-        public void UpdateBook(Book book) => BookDAO.UpdateBook(book);
+        public List<BookDto> GetAllBooks() => _bookDao.GetAllBooks();
     }
 }
