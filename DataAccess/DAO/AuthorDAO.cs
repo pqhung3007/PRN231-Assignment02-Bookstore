@@ -23,7 +23,11 @@ namespace DataAccess.DAO
         public void DeleteAuthor(int authorId)
         {
             var author = _context.Authors.FirstOrDefault(a => a.AuthorId == authorId);
+            var bookAuthor = _context.BookAuthors.FirstOrDefault(ba => ba.AuthorId == authorId);
+            
+            _context.BookAuthors.RemoveRange(bookAuthor);
             _context.Authors.Remove(author);
+            
             _context.SaveChanges();
         }
 

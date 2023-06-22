@@ -23,7 +23,16 @@ namespace DataAccess.DAO
         public void DeletePublisher(int id)
         {
             var publisher = _context.Publishers.FirstOrDefault(a => a.PubId == id);
+            var books = _context.Books.Where(b => b.PubId == id);
+            foreach (var book in books)
+            {
+                var bookAuthors = _context.BookAuthors.Where(ba => ba.BookId == book.BookId).ToList();
+                _context.BookAuthors.RemoveRange(bookAuthors);
+            }
+
+            _context.Books.RemoveRange(books);
             _context.Publishers.Remove(publisher);
+            
             _context.SaveChanges();
         }
 
