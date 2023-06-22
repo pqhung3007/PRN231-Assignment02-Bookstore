@@ -12,6 +12,7 @@ namespace DataAccess.Interfaces
     {
         void DeleteAuthor(int authorId);
         List<AuthorDto> GetAllAuthors();
+        AuthorDto GetAuthorById(int authorId);
         void InsertAuthor(AuthorDto author);
         void UpdateAuthor(AuthorDto author, int authorId);
     }

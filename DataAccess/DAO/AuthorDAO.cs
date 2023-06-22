@@ -33,6 +33,12 @@ namespace DataAccess.DAO
             return _mapper.Map<List<AuthorDto>>(listAuthors);
         }
 
+        public AuthorDto GetAuthorById(int authorId)
+        {
+            var author = _context.Authors.FirstOrDefault(a => a.AuthorId == authorId);
+            return _mapper.Map<AuthorDto>(author);
+        }
+
         public void InsertAuthor(AuthorDto authorDto)
         {
             try

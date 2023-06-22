@@ -25,5 +25,7 @@ namespace DataAccess.Repositories
         public void InsertAuthor(AuthorDto author) => _authorDao.InsertAuthor(author);
 
         public void DeleteAuthor(int authorId) => _authorDao.DeleteAuthor(authorId);
+
+        public AuthorDto GetAuthorById(int authorId) => _authorDao.GetAuthorById(authorId);
     }
 }

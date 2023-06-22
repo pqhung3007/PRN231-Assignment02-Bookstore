@@ -31,9 +31,9 @@ namespace eBookStoreWebAPI.Controllers
 
         // GET api/<AuthorsController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public IActionResult Get(int authorId)
         {
-            return Ok();
+            return Ok(_repository.GetAuthorById(authorId));
         }
 
         // POST api/<AuthorsController>

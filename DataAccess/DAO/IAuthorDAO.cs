@@ -12,6 +12,7 @@ namespace DataAccess.DAO
     {
         void DeleteAuthor(int authorId);
         List<AuthorDto> GetAllAuthors();
+        AuthorDto GetAuthorById(int authorId);
         void InsertAuthor(AuthorDto authorDto);
         void UpdateAuthor(AuthorDto authorDto, int authorId);
     }
