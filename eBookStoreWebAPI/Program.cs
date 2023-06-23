@@ -11,9 +11,9 @@ using Microsoft.OData.ModelBuilder;
 static IEdmModel GetEdmModel()
 {
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<AuthorDto>("Authors");
-    builder.EntitySet<BookDto>("Books");
-    builder.EntitySet<PublisherDto>("Publishers");
+    builder.EntitySet<Author>("Authors");
+    builder.EntitySet<Book>("Books");
+    builder.EntitySet<Publisher>("Publishers");
     
     return builder.GetEdmModel();
 }
@@ -21,8 +21,6 @@ static IEdmModel GetEdmModel()
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-/*builder.Services.AddControllers().AddOData(options => options.Select().Filter().Count().Expand()
-.AddRouteComponents("odata", GetEdmModel()));*/
 builder.Services.AddControllers().AddOData(options =>
 {
     options.Select().Filter().Count().OrderBy().Expand().SetMaxTop(100);
@@ -31,7 +29,6 @@ builder.Services.AddControllers().AddOData(options =>
     var routeOptions = options.AddRouteComponents("odata", GetEdmModel()).RouteOptions;
 
     routeOptions.EnableQualifiedOperationCall = true;
-    routeOptions.EnableKeyAsSegment = true;
     routeOptions.EnableKeyInParenthesis = false;
 });
 

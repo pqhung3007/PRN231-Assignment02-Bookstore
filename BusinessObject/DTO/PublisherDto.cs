@@ -9,7 +9,6 @@ namespace BusinessObject.DTO
 {
     public class PublisherDto
     {
-        [Key]
         public int PublisherId { get; set; }
         public string PublisherName { get; set; }
         public string City { get; set; }

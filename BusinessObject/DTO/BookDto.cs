@@ -9,7 +9,6 @@ namespace BusinessObject.DTO
 {
     public class BookDto
     {
-        [Key]
         public int BookId { get; set; }
 
         public string Title { get; set; }

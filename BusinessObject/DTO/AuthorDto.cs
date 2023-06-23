@@ -9,7 +9,6 @@ namespace BusinessObject.DTO
 {
     public class AuthorDto
     {
-        [Key]
 		public int AuthorId { get; set; }
 		public string? LastName { get; set; }
         public string? FirstName { get; set; }

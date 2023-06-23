@@ -20,7 +20,7 @@ namespace eBookStore.Controllers
         // GET: AuthorController
         public async Task<IActionResult> Index()
         {
-            _connectionString = "https://localhost:7058/api/Authors";
+            _connectionString = "https://localhost:7058/odata/Authors";
 
             HttpResponseMessage response = await _client.GetAsync(_connectionString);
             string strData = await response.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ namespace eBookStore.Controllers
 		// GET: AuthorController/Edit/5
 		public async Task<IActionResult> Edit(int id)
 		{
-            _connectionString = "https://localhost:7058/api/Authors/" + id.ToString();
+            _connectionString = "https://localhost:7058/odata/Authors/" + id.ToString();
             HttpResponseMessage response = await _client.GetAsync(_connectionString);
             string strData = await response.Content.ReadAsStringAsync();
             
@@ -72,7 +72,7 @@ namespace eBookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Author author)
 		{
-            _connectionString = "https://localhost:7058/api/Authors/" + author.AuthorId;
+            _connectionString = "https://localhost:7058/odata/Authors/" + author.AuthorId;
             string json = JsonSerializer.Serialize(author);
            
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -83,7 +83,7 @@ namespace eBookStore.Controllers
 
         public async Task<IActionResult> Delete(int id)
 		{
-            _connectionString = "https://localhost:7058/api/Authors/" + id.ToString();
+            _connectionString = "https://localhost:7058/odata/Authors/" + id.ToString();
             HttpResponseMessage response = await _client.DeleteAsync(_connectionString);
             
             return RedirectToAction("Index");
