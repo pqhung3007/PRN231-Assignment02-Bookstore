@@ -2,14 +2,38 @@ using BusinessObject;
 using DataAccess.DAO;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
+
+static IEdmModel GetEdmModel()
+{
+    ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+    builder.EntitySet<Author>("Authors");
+    builder.EntitySet<Book>("Books");
+    builder.EntitySet<Publisher>("Publishers");
+    
+    return builder.GetEdmModel();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+/*builder.Services.AddControllers().AddOData(options => options.Select().Filter().Count().Expand()
+.AddRouteComponents("odata", GetEdmModel()));*/
+builder.Services.AddControllers().AddOData(options =>
+{
+    options.Expand().Select().Filter().Count().OrderBy().Expand().SetMaxTop(100);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    options.EnableQueryFeatures();
+    var routeOptions = options.AddRouteComponents("odata", GetEdmModel()).RouteOptions;
+
+    routeOptions.EnableQualifiedOperationCall = true;
+    routeOptions.EnableKeyAsSegment = true;
+    routeOptions.EnableKeyInParenthesis = false;
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
@@ -34,7 +58,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseODataBatching();
+app.UseRouting();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

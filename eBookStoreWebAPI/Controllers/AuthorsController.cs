@@ -5,14 +5,14 @@ using DataAccess.Interfaces;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace eBookStoreWebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
     public class AuthorsController : ODataController
     {
         private readonly IAuthorRepository _repository;
@@ -23,21 +23,21 @@ namespace eBookStoreWebAPI.Controllers
         }
 
         // GET: api/<AuthorsController>
-        [HttpGet]
-        public ActionResult<IEnumerable<AuthorDto>> Get()
+        [EnableQuery]
+        public ActionResult Get()
         {
             return Ok(_repository.GetAllAuthors());
         }
 
         // GET api/<AuthorsController>/5
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [EnableQuery]
+        public IActionResult Get(int key)
         {
-            return Ok(_repository.GetAuthorById(id));
+            return Ok(_repository.GetAuthorById(key));
         }
 
         // POST api/<AuthorsController>
-        [HttpPost]
+        [EnableQuery]
         public IActionResult Post([FromBody]AuthorDto author)
         {
             _repository.InsertAuthor(author);
@@ -46,18 +46,18 @@ namespace eBookStoreWebAPI.Controllers
        
 
         // PUT api/<AuthorsController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] AuthorDto author)
+        [EnableQuery]
+        public IActionResult Put(int key, [FromBody] AuthorDto author)
         {
-            _repository.UpdateAuthor(author, id);
+            _repository.UpdateAuthor(author, key);
             return Ok();
         }
 
         // DELETE api/<AuthorsController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [EnableQuery]
+        public IActionResult Delete(int key)
         {
-            _repository.DeleteAuthor(id);
+            _repository.DeleteAuthor(key);
             return Ok();
         }
     }

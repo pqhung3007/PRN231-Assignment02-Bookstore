@@ -2,14 +2,15 @@
 using DataAccess.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Formatter;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace eBookStoreWebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PublishersController : ControllerBase
+
+    public class PublishersController : ODataController
     {
         private readonly IPublisherRepository _repository;
 
@@ -19,41 +20,41 @@ namespace eBookStoreWebAPI.Controllers
         }
         
         // GET: api/<PublishersController>
-        [HttpGet]
+        [EnableQuery]
         public ActionResult<IEnumerable<PublisherDto>> Get()
         {
-            return Ok(_repository.GetAllPublishers());
+            return Ok(_repository.GetAllPublishers().AsQueryable());
         }
 
         // GET api/<PublishersController>/5
-        [HttpGet("{id}")]
-        public ActionResult<PublisherDto> Get(int publisherId)
+        [EnableQuery]
+        public ActionResult<PublisherDto> Get(int key)
         {
-            return Ok(_repository.GetPublisherById(publisherId));
+            return Ok(_repository.GetPublisherById(key));
         }
-        
+
         // POST api/<PublishersController>
-        [HttpPost]
+        [EnableQuery]
         public IActionResult Post([FromBody] PublisherDto publisherDto)
         {
             _repository.InsertPublisher(publisherDto);
             return Ok();
         }
-       
+
 
         // PUT api/<PublishersController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put([FromODataUri] int publisherId, [FromBody] PublisherDto publisherDto)
+        [EnableQuery]
+        public IActionResult Put(int key, [FromBody] PublisherDto publisherDto)
         {
-            _repository.UpdatePublisher(publisherId, publisherDto);
+            _repository.UpdatePublisher(key, publisherDto);
             return Ok();
         }
 
         // DELETE api/<PublishersController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [EnableQuery]
+        public IActionResult Delete(int key)
         {
-            _repository.DeletePublisher(id);
+            _repository.DeletePublisher(key);
             return Ok();
         }
     }
