@@ -33,6 +33,7 @@ namespace eBookStoreWebAPI.Controllers
 
         // GET api/<AuthorsController>/5
         [EnableQuery]
+        [HttpGet("{id}")]
         public IActionResult Get(int key)
         {
             return Ok(_repository.GetAuthorById(key));
@@ -40,7 +41,7 @@ namespace eBookStoreWebAPI.Controllers
 
         // POST api/<AuthorsController>
         [HttpPost]
-        public IActionResult Post([FromBody]AuthorDto author)
+        public IActionResult Post([FromBody] AuthorDto author)
         {
             _repository.InsertAuthor(author);
             return Ok();
@@ -49,6 +50,7 @@ namespace eBookStoreWebAPI.Controllers
 
         // PUT api/<AuthorsController>/5
         [EnableQuery]
+        [HttpPut]
         public IActionResult Put(int key, [FromBody] AuthorDto author)
         {
             _repository.UpdateAuthor(author, key);
