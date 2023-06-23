@@ -9,11 +9,6 @@ namespace DataAccess.Interfaces
 {
     public interface IUserRepository
     {
-        User GetUserById(int id);
-        User GetMemberByUsernameAndPassword(string username, string password);
-        List<User> GetAllUsers();
-        void InsertUser(User user);
-        void UpdateUser(User user);
-        void DeleteUser(User user);
+        Task<string?> Login(string email, string password);
     }
 }

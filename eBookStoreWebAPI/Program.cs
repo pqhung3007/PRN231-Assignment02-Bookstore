@@ -14,7 +14,8 @@ static IEdmModel GetEdmModel()
     builder.EntitySet<Author>("Authors");
     builder.EntitySet<Book>("Books");
     builder.EntitySet<Publisher>("Publishers");
-    
+    builder.EntitySet<User>("Users");
+
     return builder.GetEdmModel();
 }
 
@@ -44,6 +45,9 @@ builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 
 builder.Services.AddScoped<IBookDAO, BookDAO>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+
+builder.Services.AddScoped<IUserDAO, UserDAO>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddDbContext<BookStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BookStoreDb")));

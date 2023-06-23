@@ -11,16 +11,16 @@ namespace DataAccess.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public void DeleteUser(User user) => UserDAO.DeleteUser(user);
+        private readonly IUserDAO _userDao;
 
-        public List<User> GetAllUsers() => UserDAO.GetAllUsers();
+        public UserRepository(IUserDAO userDAO)
+        {
+            _userDao = userDAO;
+        }
 
-        public User GetMemberByUsernameAndPassword(string username, string password) => UserDAO.GetMemberByUsernameAndPassword(username, password);
-
-        public User GetUserById(int id) => UserDAO.GetUserById(id);
-
-        public void InsertUser(User user) => UserDAO.InsertUser(user);
-
-        public void UpdateUser(User user) => UserDAO.UpdateUser(user);
+        public async Task<string?> Login(string email, string password)
+        {
+            return await _userDao.Login(email, password);
+        }
     }
 }

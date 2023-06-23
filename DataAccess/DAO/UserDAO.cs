@@ -1,4 +1,5 @@
 ﻿using BusinessObject;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,36 +8,36 @@ using System.Threading.Tasks;
 
 namespace DataAccess.DAO
 {
-    internal class UserDAO
+    public class UserDAO : IUserDAO
     {
-        internal static void DeleteUser(User user)
+        private readonly IConfiguration _configuration;
+        
+        public UserDAO(IConfiguration configuration)
         {
-            throw new NotImplementedException();
+            _configuration = configuration;
         }
 
-        internal static List<User> GetAllUsers()
+        public Task<string> Login(string email, string password)
         {
-            throw new NotImplementedException();
-        }
-
-        internal static User GetMemberByUsernameAndPassword(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static User GetUserById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void InsertUser(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void UpdateUser(User user)
-        {
-            throw new NotImplementedException();
+            string configEmail = _configuration["Email"];
+            string configPassword = _configuration["Password"];
+            if (configEmail== email && configPassword == password)
+            {
+                var user = new User()
+                {
+                    EmailAddress = email,
+                    Password = password,
+                    FirstName = "Admin",
+                    LastName = "BookStore",
+                    RoleId = 2,
+                    PubId = 1,
+                };
+                return Task.FromResult("Login successfully: " + user);
+            }
+            else
+            {
+                return Task.FromResult("Login Failed");
+            }
         }
     }
 }
