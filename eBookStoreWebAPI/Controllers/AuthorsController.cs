@@ -24,7 +24,7 @@ namespace eBookStoreWebAPI.Controllers
 
         // GET: api/<AuthorsController>
         [EnableQuery]
-        public ActionResult Get()
+        public ActionResult<IEnumerable<AuthorDto>> Get()
         {
             return Ok(_repository.GetAllAuthors());
         }

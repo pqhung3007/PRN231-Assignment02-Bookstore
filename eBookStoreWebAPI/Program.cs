@@ -1,4 +1,5 @@
 using BusinessObject;
+using BusinessObject.DTO;
 using DataAccess.DAO;
 using DataAccess.Interfaces;
 using DataAccess.Repositories;
@@ -10,9 +11,9 @@ using Microsoft.OData.ModelBuilder;
 static IEdmModel GetEdmModel()
 {
     ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-    builder.EntitySet<Author>("Authors");
-    builder.EntitySet<Book>("Books");
-    builder.EntitySet<Publisher>("Publishers");
+    builder.EntitySet<AuthorDto>("Authors");
+    builder.EntitySet<BookDto>("Books");
+    builder.EntitySet<PublisherDto>("Publishers");
     
     return builder.GetEdmModel();
 }
@@ -24,7 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 .AddRouteComponents("odata", GetEdmModel()));*/
 builder.Services.AddControllers().AddOData(options =>
 {
-    options.Expand().Select().Filter().Count().OrderBy().Expand().SetMaxTop(100);
+    options.Select().Filter().Count().OrderBy().Expand().SetMaxTop(100);
 
     options.EnableQueryFeatures();
     var routeOptions = options.AddRouteComponents("odata", GetEdmModel()).RouteOptions;
