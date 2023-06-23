@@ -31,7 +31,7 @@ namespace eBookStore.Controllers
 
         public async Task<ActionResult> CreateAuthor(string firstName, string lastName, string emailAddress, string city)
 		{
-            _connectionString = "https://localhost:7058/api/Authors";
+            _connectionString = "https://localhost:7058/odata/Authors";
 			
             var request = new Author
             {

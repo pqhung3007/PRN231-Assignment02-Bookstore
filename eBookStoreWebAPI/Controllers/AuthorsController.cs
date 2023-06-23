@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace eBookStoreWebAPI.Controllers
 {
-
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthorsController : ODataController
     {
         private readonly IAuthorRepository _repository;
@@ -24,6 +25,7 @@ namespace eBookStoreWebAPI.Controllers
 
         // GET: api/<AuthorsController>
         [EnableQuery]
+        [HttpGet]
         public ActionResult<IEnumerable<AuthorDto>> Get()
         {
             return Ok(_repository.GetAllAuthors());
@@ -37,13 +39,13 @@ namespace eBookStoreWebAPI.Controllers
         }
 
         // POST api/<AuthorsController>
-        [EnableQuery]
+        [HttpPost]
         public IActionResult Post([FromBody]AuthorDto author)
         {
             _repository.InsertAuthor(author);
             return Ok();
         }
-       
+
 
         // PUT api/<AuthorsController>/5
         [EnableQuery]
@@ -54,10 +56,10 @@ namespace eBookStoreWebAPI.Controllers
         }
 
         // DELETE api/<AuthorsController>/5
-        [EnableQuery]
-        public IActionResult Delete(int key)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            _repository.DeleteAuthor(key);
+            _repository.DeleteAuthor(id);
             return Ok();
         }
     }
